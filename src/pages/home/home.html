@@ -1,17 +1,20 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+      <ion-title>Home</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
+  <h2>アズレンの補助アプリです。</h2>
   <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
+    現在のレベル：{{user.level}}
   </p>
   <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
+    現在の資金：{{user.money}}
   </p>
+  <p>
+    現在の燃料：{{user.fuel}}
+  </p>
+  <button ion-button color="primarily" (click)="openModal()">更新</button>
+  <button ion-button color="secondary" (click)="openAbout()">更新</button>
 </ion-content>

@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      管理
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="Manage">
+      <ion-segment-button value="money">
+        資金
+      </ion-segment-button>
+      <ion-segment-button value="fuel">
+        燃料
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div [ngSwitch]="Manage">
+      <ion-list *ngSwitchCase="'money'">
+        <ion-card>
+          <ion-card-content>
+            <google-chart [data]="moneyLineChartData"></google-chart>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+              
+      <ion-list *ngSwitchCase="'fuel'">
+        <ion-card>
+            <ion-card-content>
+              <google-chart [data]="fuelLineChartData"></google-chart>
+            </ion-card-content>
+          </ion-card>
+      </ion-list>
+    </div>      
+  </ion-content>

@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="closeModal()">
+          <span ion-text color="primary" showWhen="ios">Close</span>
+          <ion-icon name="md-close" showWhen="android"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>更新</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="update" (ngSubmit)="submit()">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>{{(this.keyboard.isOpen())?'現在：'+this.navParams.get('level'):'指揮官レベル'}}</ion-label>
+        <ion-input type="text" formControlName="level"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>{{(this.keyboard.isOpen())?'現在：'+this.navParams.get('money'):'資金'}}</ion-label>
+        <ion-input type="text" formControlName="money"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>{{(this.keyboard.isOpen())?'現在：'+this.navParams.get('fuel'):'燃料'}}</ion-label>
+        <ion-input type="text" formControlName="fuel"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button type="submit">
+      更新
+    </button>
+  </form>
+</ion-content>
