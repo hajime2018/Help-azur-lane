@@ -5,6 +5,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 //charts
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { ChartsModule } from 'ng2-charts';
 
 import { MyApp } from './app.component';
 
@@ -34,7 +35,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     //storage
     IonicStorageModule.forRoot(),
     //charts
-    Ng2GoogleChartsModule
+    Ng2GoogleChartsModule,
+    ChartsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

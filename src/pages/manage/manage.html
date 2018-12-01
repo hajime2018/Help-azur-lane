@@ -17,21 +17,15 @@
 </ion-header>
 
 <ion-content>
-    <div [ngSwitch]="Manage">
-      <ion-list *ngSwitchCase="'money'">
-        <ion-card>
-          <ion-card-content>
-            <google-chart [data]="moneyLineChartData"></google-chart>
-          </ion-card-content>
-        </ion-card>
-      </ion-list>
-              
-      <ion-list *ngSwitchCase="'fuel'">
-        <ion-card>
-            <ion-card-content>
-              <google-chart [data]="fuelLineChartData"></google-chart>
-            </ion-card-content>
-          </ion-card>
-      </ion-list>
-    </div>      
+  <div style="display: block">
+    <canvas baseChart
+      [datasets]="lineChartData"
+      [labels]="lineChartLabels"
+      [options]="lineChartOptions"
+      [legend]="lineChartLegend"
+      [chartType]="lineChartType"
+      (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)"></canvas>
+  </div>
+  <button ion-button (click)="clicked()">Button</button>
   </ion-content>

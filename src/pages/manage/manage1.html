@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      管理
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar no-border-top>
+    <ion-segment (ionChange)="onSegmentChanged($event)" [(ngModel)]="Manage">
+      <ion-segment-button value="money">
+        資金
+      </ion-segment-button>
+      <ion-segment-button value="fuel">
+        燃料
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides (ionSlideDidChange)="onSlideChanged($event)">
+    <ion-slide style="align-items:flex-start">
+      <google-chart [data]="moneyLineChartData"></google-chart>
+    </ion-slide>
+    <ion-slide style="align-items:flex-start">
+      <google-chart [data]="fuelLineChartData"></google-chart>
+    </ion-slide>
+  </ion-slides>
+  <ion-list>
+    <ion-list-header>
+      任務
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Daenerys Targaryen</ion-label>
+      <ion-checkbox checked="true"></ion-checkbox>
+    </ion-item>
+        
+    <ion-item>
+      <ion-label>Arya Stark</ion-label>
+        <ion-checkbox checked="true"></ion-checkbox>
+      </ion-item>
+  </ion-list>
+</ion-content>

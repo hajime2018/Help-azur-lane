@@ -28,6 +28,6 @@ export class UpdatePage {
 
   closeModal(){
     //console.log('closeModal');
-    //this.viewCtrl.dismiss(this.);
+    this.viewCtrl.dismiss();
   }
 }

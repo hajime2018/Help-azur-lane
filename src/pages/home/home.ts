@@ -4,6 +4,7 @@ import { UpdatePage } from './update';
 //import { AboutPage } from '../about/about';
 //storage
 import { Storage } from '@ionic/storage';
+import { ValueTransformer } from '../../../node_modules/@angular/compiler/src/util';
 
 @Component({
   selector: 'page-home',
@@ -22,7 +23,7 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
-    /*this.storage.get('end_time').then(val => {
+    this.storage.get('end_time').then(val => {
       const today = new Date();
       if(today.getTime()>val.getTime()){
         //console.log(val);
@@ -33,7 +34,8 @@ export class HomePage {
       else{
         console.log(val+'n');
       }
-    });*/
+    });
+    //get now data in home
     this.storage.get('now').then(val=>{
       console.log('ionViewWillEnter'+val);
       if(val!==null){
@@ -73,10 +75,11 @@ export class HomePage {
     
 
   openAbout(){
-    this.storage.get('6').then(val=>{console.log('time'+val.time+'fuel'+val.fuel+'money'+val.money)});
-    const date= new Date('2018/10/14 23:12:11')
-    this.storage.set('6',{time:date,money:40000,fuel:9000});
-    //this.storage.clear();
+    this.storage.forEach((value,key,index)=>{
+      console.log(value);
+      console.log(key);
+    })
+    //this.storage.set('num_manage',6);
   }
 
 }
