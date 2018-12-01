@@ -1,31 +1,40 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      管理
-    </ion-title>
-  </ion-navbar>
-  <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="Manage">
-      <ion-segment-button value="money">
-        資金
-      </ion-segment-button>
-      <ion-segment-button value="fuel">
-        燃料
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
-</ion-header>
+    <ion-navbar>
+      <ion-title>
+        管理
+      </ion-title>
+    </ion-navbar>
+    <ion-toolbar no-border-top>
+      <ion-segment (ionChange)="onSegmentChanged($event)" [(ngModel)]="Manage">
+        <ion-segment-button value="money">
+          資金
+        </ion-segment-button>
+        <ion-segment-button value="fuel">
+          燃料
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
-  <div style="display: block">
-    <canvas baseChart
-      [datasets]="lineChartData"
-      [labels]="lineChartLabels"
-      [options]="lineChartOptions"
-      [legend]="lineChartLegend"
-      [chartType]="lineChartType"
-      (chartHover)="chartHovered($event)"
-      (chartClick)="chartClicked($event)"></canvas>
-  </div>
-  <button ion-button (click)="clicked()">Button</button>
+  <ion-card>
+  <ion-slides (ionSlideDidChange)="onSlideChanged($event)">
+    <ion-slide>
+      <div style="display: block">
+        <canvas baseChart
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+    </div>
+    </ion-slide>
+    <ion-slide>
+      <h1>hello</h1>
+    </ion-slide>
+  </ion-slides>
+  </ion-card>
+  <button ion-button (click)="randomize()">Button</button>
   </ion-content>

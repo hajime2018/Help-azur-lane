@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Slides } from 'ionic-angular';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
@@ -14,9 +14,6 @@ export class ManagePage{
   
   //moneyTable = new Array([]);
   //fuelTable = new Array([]);
-  moneyTable: number[] = [];
-  fuelTable: number[] = [];
-  //timeTable: string[] = [];
 
   constructor(
     private storage: Storage,
@@ -25,28 +22,22 @@ export class ManagePage{
     this.Slider = [ {id: "money"}, {id: "fuel"} ];
   }
 
-  ionViewWillEnter() {
-    this.storage.get('num_manage').then(val => {
-      console.log(val);
-      if(val>0){
-        let i;
-        console.log(val);
-        for(i = 1; i <= val; i++){
-          console.log(i);
-          this.storage.get(String(i)).then(val => {
-            //this.moneyTable.push([val.time, val.money]);
-            //this.fuelTable.push([val.time, val.fuel]);
-            this.moneyTable.push(val.money);
-            this.fuelTable.push(val.fuel);
-            //this.timeTable.push(val.time);
-          });
-
-        }
-      }
-    })
+  async ionViewWillEnter() {
+    let _lineChartData:Array<any> = new Array(this.lineChartData.length);
+    for (let i = 0; i < this.lineChartData.length; i++){
+      _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label};
+    }
+    const num = await this.storage.get('num_manage');
+    for(let i = 1; i <= num; i++){
+      await this.storage.get(String(i)).then(val => {
+        _lineChartData[0].data[i-1] = val.money;
+        _lineChartData[1].data[i-1] = val.fuel;
+      });
+    }
+    this.lineChartData = _lineChartData;
   }
 
-  /*onSegmentChanged(segmentButton) {
+  onSegmentChanged(segmentButton) {
     console.log("Segment changed to", segmentButton.value);
     const selectedIndex = this.Slider.findIndex((slide) => {
       return slide.id === segmentButton.value;
@@ -60,7 +51,7 @@ export class ManagePage{
     this.Manage = currentSlide.id;
   }
 
-  moneyLineChartData =  {
+  /*moneyLineChartData =  {
     chartType: 'LineChart',
     dataTable: this.moneyTable,
     options: {
@@ -78,25 +69,54 @@ export class ManagePage{
     },
   };*/
 
-  public lineChartOptions:any = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-    /*scales: {
-      xAxes: [{
-          time: {
-              unit: 'day'
-          }
-      }]
-    }*/
-  };
-  public lineChartLabels:string[] = ['1','2','3','4','5','6'];
-  public lineChartType:string = 'line';
-  public lineChartLegend:boolean = true;
- 
-  public lineChartData:any[] = [
-    {data: this.moneyTable, label: 'money'},
-    //{data: this.fuelTable, label: 'fuel'}
+  public lineChartData:Array<any> = [
+    {data: [/*65, 59, 80, 81, 56, 55, 40*/], label: 'money'},
+    {data: [/*28, 48, 40, 19, 86, 27, 90*/], label: 'fuel'},
+    //{data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C'}
   ];
+  public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartOptions:any = {
+    responsive: true
+  };
+  public lineChartColors:Array<any> = [
+    { // grey
+      backgroundColor: 'rgba(148,159,177,0.2)',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    },
+    { // dark grey
+      backgroundColor: 'rgba(77,83,96,0.2)',
+      borderColor: 'rgba(77,83,96,1)',
+      pointBackgroundColor: 'rgba(77,83,96,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    },
+    { // grey
+      backgroundColor: 'rgba(148,159,177,0.2)',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    }
+  ];
+  public lineChartLegend:boolean = true;
+  public lineChartType:string = 'line';
+ 
+  public randomize():void {
+    /*let _lineChartData:Array<any> = new Array(this.lineChartData.length);
+    for (let i = 0; i < this.lineChartData.length; i++) {
+      _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label};
+      for (let j = 0; j < 7; j++) {
+        _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
+      }
+    }
+    this.lineChartData = _lineChartData;*/
+  }
  
   // events
   public chartClicked(e:any):void {
@@ -105,23 +125,5 @@ export class ManagePage{
  
   public chartHovered(e:any):void {
     console.log(e);
-  }
-  clicked(){
-    console.log(this.lineChartData[0].data);
-  }
- 
-  public randomize():void {
-    // Only Change 3 values
-    let data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      (Math.random() * 100),
-      56,
-      (Math.random() * 100),
-      40];
-    let clone = JSON.parse(JSON.stringify(this.lineChartData));
-    clone[0].data = data;
-    this.lineChartData = clone;
   }
 }

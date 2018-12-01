@@ -19,10 +19,19 @@
 <ion-content>
   <ion-slides (ionSlideDidChange)="onSlideChanged($event)">
     <ion-slide style="align-items:flex-start">
-      <google-chart [data]="moneyLineChartData"></google-chart>
+        <div style="display: block">
+            <canvas baseChart
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+          </div>
     </ion-slide>
     <ion-slide style="align-items:flex-start">
-      <google-chart [data]="fuelLineChartData"></google-chart>
+      <h1>hello</h1>
     </ion-slide>
   </ion-slides>
   <ion-list>
