@@ -17,24 +17,38 @@
   </ion-header>
 
 <ion-content>
-  <ion-card>
-  <ion-slides (ionSlideDidChange)="onSlideChanged($event)">
+  <ion-slides (ionSlideDidChange)="onSlideChanged($event)" style="background-color:orange">
     <ion-slide>
-      <div style="display: block">
-        <canvas baseChart
-          [datasets]="lineChartData"
-          [labels]="lineChartLabels"
-          [options]="lineChartOptions"
-          [legend]="lineChartLegend"
-          [chartType]="lineChartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"></canvas>
-    </div>
+      <ion-card>
+        <div style="display: block">
+          <canvas baseChart
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </ion-card>
     </ion-slide>
     <ion-slide>
       <h1>hello</h1>
     </ion-slide>
   </ion-slides>
-  </ion-card>
   <button ion-button (click)="randomize()">Button</button>
+  <ion-list>
+      <ion-list-header>
+        任務
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Daenerys Targaryen</ion-label>
+        <ion-checkbox checked="true"></ion-checkbox>
+      </ion-item>
+          
+      <ion-item>
+        <ion-label>Arya Stark</ion-label>
+          <ion-checkbox checked="true"></ion-checkbox>
+        </ion-item>
+    </ion-list>
   </ion-content>

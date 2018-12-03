@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, AlertController } from 'ionic-angular';
 import { UpdatePage } from './update';
 //import { AboutPage } from '../about/about';
 //storage
@@ -17,24 +17,37 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
+    private alertCtrl: AlertController,
     private storage: Storage
   ) {
 
   }
 
-  ionViewWillEnter() {
-    this.storage.get('end_time').then(val => {
-      const today = new Date();
-      if(today.getTime()>val.getTime()){
-        //console.log(val);
-        const setToday = new Date(today.toDateString()+' 23:59:59');
-        console.log(setToday);
-        //this.storage.set('start_time',val);
+  async ionViewWillEnter() {
+    /*const end = await this.storage.get('end_time');
+    const today = new Date();
+    if(today.getTime()>end.getTime()){
+      console.log('date change');
+      let alert = this.alertCtrl.create({
+        title: 'Shoud update',
+        subTitle: '日付が変わりました。更新してください',
+        buttons: ['OK']
+      });
+      alert.present();
+      const endToday = new Date(today.toDateString()+' 23:59:59');
+      const startToday = new Date(today.toDateString()+' 00:00:00');
+      console.log(endToday);
+      const num = await this.storage.get('num_manage');
+      for(let i = 0; i<num; i++){
+        console.log('remove'+(i+1));
+        //await this.storage.remove(String(i+1));
       }
-      else{
-        console.log(val+'n');
-      }
-    });
+      //await this.storage.set('start_time',startToday);
+      //await this.storage.set('end_time',endToday);
+    }
+    else{
+      console.log('today');
+    }*/
     //get now data in home
     this.storage.get('now').then(val=>{
       console.log('ionViewWillEnter'+val);
@@ -74,12 +87,15 @@ export class HomePage {
   }
     
 
-  openAbout(){
-    this.storage.forEach((value,key,index)=>{
+  async openAbout(){
+    await this.storage.forEach((value,key,index)=>{
       console.log(value);
       console.log(key);
     })
-    //this.storage.set('num_manage',6);
+    /*const a = await this.storage.get('end_time');
+    //console.log(a.toDateString());
+    const b = new Date(a.toDateString()+' 00:00:00');
+    this.storage.set('start_time',b);*/
   }
 
 }
